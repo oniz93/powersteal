@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://warden001"]
+
+[ext_resource type="Script" path="res://scenes/bosses/warden/warden.gd" id="1_script"]
+[ext_resource type="PackedScene" uid="uid://ritualprompt001" path="res://scenes/ui/ritual_prompt.tscn" id="2_prompt"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_col"]
+size = Vector2(24, 24)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hurt"]
+size = Vector2(24, 24)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_interact"]
+radius = 40.0
+
+[node name="Warden" type="CharacterBody2D" groups=["boss", "enemies"]]
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("1_script")
+
+[node name="Sprite" type="ColorRect" parent="."]
+offset_left = -12.0
+offset_top = -12.0
+offset_right = 12.0
+offset_bottom = 12.0
+color = Color(0.878431, 0.878431, 0.878431, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_col")
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("RectangleShape2D_hurt")
+
+[node name="InteractArea" type="Area2D" parent="." groups=["interactable"]]
+collision_layer = 16
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractArea"]
+shape = SubResource("CircleShape2D_interact")
+disabled = true
+
+[node name="RitualPrompt" parent="." instance=ExtResource("2_prompt")]
+visible = false
+position = Vector2(0, -30)
