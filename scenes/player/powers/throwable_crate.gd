@@ -10,6 +10,7 @@ var current_state: State = State.IDLE
 
 var throw_direction: Vector2 = Vector2.ZERO
 var grabber_node: Node2D = null
+var thrower_node: Node2D = null
 var hold_offset: float = 30.0 # Distance from grabber
 
 @onready var collision_shape = $CollisionShape2D
@@ -61,6 +62,7 @@ func grab(by_node: Node2D) -> void:
 
 func throw(direction: Vector2) -> void:
 	current_state = State.THROWN
+	thrower_node = grabber_node
 	throw_direction = direction.normalized()
 	grabber_node = null
 	
@@ -94,8 +96,8 @@ func _on_hitbox_body_entered(body: Node2D) -> void:
 	if current_state != State.THROWN:
 		return
 		
-	# Ignore player (so we don't hit ourselves when throwing)
-	if body.collision_layer & 1:
+	# Ignore the person who threw it
+	if is_instance_valid(thrower_node) and body == thrower_node:
 		return
 		
 	_on_impact(body)
