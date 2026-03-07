@@ -10,6 +10,9 @@ const FIRE_PATCH_SCENE: PackedScene = preload("res://scenes/player/powers/fire_p
 var direction: Vector2 = Vector2.RIGHT
 var lifetime_timer: float = 0.0
 var is_enemy_projectile: bool = false
+var leaves_patch: bool = true
+var is_homing: bool = false
+var target_node: Node2D = null
 
 func setup(dir: Vector2, is_enemy: bool = false) -> void:
 	direction = dir.normalized()
@@ -27,6 +30,11 @@ func setup(dir: Vector2, is_enemy: bool = false) -> void:
 func _physics_process(delta: float) -> void:
 	if PowerManager.has_method("is_time_frozen") and PowerManager.get("is_time_frozen"):
 		return # Time freeze mechanic placeholder
+		
+	if is_homing and is_instance_valid(target_node):
+		var target_dir = global_position.direction_to(target_node.global_position)
+		direction = direction.lerp(target_dir, 1.5 * delta).normalized()
+		rotation = direction.angle()
 		
 	position += direction * SPEED * delta
 	
@@ -48,9 +56,10 @@ func _on_body_entered(body: Node2D) -> void:
 	_destroy()
 
 func _destroy() -> void:
-	# Spawn fire patch
-	var patch = FIRE_PATCH_SCENE.instantiate()
-	get_parent().call_deferred("add_child", patch)
-	patch.global_position = global_position
+	if leaves_patch:
+		# Spawn fire patch
+		var patch = FIRE_PATCH_SCENE.instantiate()
+		get_parent().call_deferred("add_child", patch)
+		patch.global_position = global_position
 	
 	queue_free()

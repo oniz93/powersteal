@@ -1,6 +1,6 @@
 extends BossBase
 
-const MOVE_SPEED: float = 60.0
+const MOVE_SPEED: float = 100.0
 const PROJECTILE_SCENE = preload("res://scenes/player/powers/fireball_projectile.tscn")
 
 @onready var sprite = $Sprite
@@ -109,6 +109,7 @@ func _shoot_slow_projectile() -> void:
 	get_parent().add_child(proj)
 	proj.global_position = global_position + (dir * 20.0)
 	proj.setup(dir, true)
+	proj.leaves_patch = false
 	
 	# Modify projectile to be slow but last longer
 	proj.SPEED = 100.0 # Very slow

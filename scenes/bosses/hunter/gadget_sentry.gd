@@ -13,6 +13,7 @@ var player_ref: Node2D = null
 @onready var emp_area = $EmpArea
 
 func _ready() -> void:
+	add_to_group("hunter_minions")
 	var players = get_tree().get_nodes_in_group("player")
 	if players.size() > 0:
 		player_ref = players[0]
@@ -41,6 +42,9 @@ func _shoot() -> void:
 	get_parent().add_child(proj)
 	proj.global_position = global_position + (dir * 15.0)
 	proj.setup(dir, true)
+	proj.leaves_patch = false
+	proj.is_homing = true
+	proj.target_node = player_ref
 	
 	# Adjust projectile visually to look like a bullet
 	var p_sprite = proj.get_node("Sprite")

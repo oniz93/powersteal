@@ -2,6 +2,7 @@ extends BossBase
 
 const RUN_SPEED: float = 100.0
 const PROJECTILE_SCENE = preload("res://scenes/player/powers/fireball_projectile.tscn")
+const SENTRY_SCENE = preload("res://scenes/bosses/hunter/gadget_sentry.tscn")
 
 @onready var sprite = $Sprite
 @onready var interact_col = $InteractArea/CollisionShape2D
@@ -15,6 +16,8 @@ var dash_timer: float = 0.0
 var dash_direction: Vector2 = Vector2.ZERO
 
 var counter_cooldown: float = 0.0
+var sentry_cooldown: float = 5.0
+var poison_timer: float = 0.0
 
 func _ready() -> void:
 	max_health = 50
@@ -23,6 +26,11 @@ func _ready() -> void:
 	PowerManager.power_used.connect(_on_player_power_used)
 	attack_shape.disabled = true
 	super._ready()
+
+func take_damage(amount: int, from_direction: Vector2 = Vector2.ZERO, damage_type: String = "physical") -> void:
+	if damage_type == "poison" or damage_type == "fire":
+		return
+	super.take_damage(amount, from_direction, damage_type)
 
 func _on_phase_entered(phase: int) -> void:
 	match phase:
@@ -43,6 +51,19 @@ func _physics_process(delta: float) -> void:
 		return
 		
 	counter_cooldown -= delta
+	
+	sentry_cooldown -= delta
+	if sentry_cooldown <= 0.0 and current_state >= State.PHASE1:
+		var minions = get_tree().get_nodes_in_group("hunter_minions")
+		if minions.size() < 2:
+			_spawn_sentry()
+			sentry_cooldown = 10.0
+			
+	if current_state >= State.PHASE2:
+		poison_timer -= delta
+		if poison_timer <= 0.0:
+			_spawn_poison_trail()
+			poison_timer = 0.5 # Drop a trail every 0.5s
 		
 	if is_dashing:
 		dash_timer -= delta
@@ -74,18 +95,83 @@ func _do_random_action() -> void:
 	if not is_instance_valid(player_ref): return
 	
 	var r = randf()
-	if current_state >= State.PHASE3 and r < 0.4:
+	if current_state >= State.PHASE3 and r < 0.2:
 		_melee_combo()
-	elif r < 0.7:
+	elif r < 0.4:
 		_throw_flash()
-	else:
+	elif r < 0.7:
 		_shoot_grapple()
+	else:
+		_shoot_projectile()
 		
 	match current_state:
 		State.PHASE1: action_timer = 2.0
 		State.PHASE2: action_timer = 1.5
 		State.PHASE3: action_timer = 1.0
 		State.PHASE4: action_timer = 0.5
+
+func _spawn_sentry() -> void:
+	var sentry = SENTRY_SCENE.instantiate()
+	get_parent().add_child(sentry)
+	var spawn_pos = Vector2(randf_range(100, 540), randf_range(100, 260))
+	if is_instance_valid(player_ref) and spawn_pos.distance_to(player_ref.global_position) < 100:
+		spawn_pos.x += 200 # Push it away
+		if spawn_pos.x > 540: spawn_pos.x -= 400
+	sentry.global_position = spawn_pos
+
+func _spawn_poison_trail() -> void:
+	var poison = Area2D.new()
+	poison.collision_layer = 0
+	poison.collision_mask = 1 # Only look for player
+	
+	var col = CollisionShape2D.new()
+	var shape = CircleShape2D.new()
+	shape.radius = 24.0
+	col.shape = shape
+	poison.add_child(col)
+	
+	var vis = ColorRect.new()
+	vis.color = Color(0.0, 0.8, 0.0, 0.5)
+	vis.position = Vector2(-24, -24)
+	vis.size = Vector2(48, 48)
+	poison.add_child(vis)
+	
+	get_parent().add_child(poison)
+	poison.global_position = global_position
+	
+	# Small script to apply poison damage
+	var gd_script = GDScript.new()
+	gd_script.source_code = """
+extends Area2D
+var tick = 0.5
+func _physics_process(delta: float):
+	tick -= delta
+	if tick <= 0.0:
+		tick = 0.5
+		for body in get_overlapping_bodies():
+			if body.has_method('take_damage'): body.take_damage(1, Vector2.ZERO, 'poison')
+	"""
+	gd_script.reload()
+	poison.set_script(gd_script)
+	poison.set_process_internal(true)
+	
+	await get_tree().create_timer(4.0).timeout
+	if is_instance_valid(poison): poison.queue_free()
+
+func _shoot_projectile() -> void:
+	if not is_instance_valid(player_ref): return
+	var dir = global_position.direction_to(player_ref.global_position)
+	var proj = PROJECTILE_SCENE.instantiate()
+	get_parent().add_child(proj)
+	proj.global_position = global_position + (dir * 20.0)
+	proj.setup(dir, true)
+	proj.leaves_patch = false
+	proj.is_homing = true
+	proj.target_node = player_ref
+	
+	var p_sprite = proj.get_node("Sprite")
+	p_sprite.color = Color("#FFFF00") # Yellow bullet
+	p_sprite.scale = Vector2(0.5, 0.5)
 
 func _melee_combo() -> void:
 	if not is_instance_valid(player_ref): return
