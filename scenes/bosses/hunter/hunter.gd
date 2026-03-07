@@ -4,6 +4,8 @@ const RUN_SPEED: float = 100.0
 const PROJECTILE_SCENE = preload("res://scenes/player/powers/fireball_projectile.tscn")
 const SENTRY_SCENE = preload("res://scenes/bosses/hunter/gadget_sentry.tscn")
 
+const POISON_SCENE = preload("res://scenes/bosses/hunter/poison_patch.tscn")
+
 @onready var sprite = $Sprite
 @onready var interact_col = $InteractArea/CollisionShape2D
 @onready var ritual_prompt = $RitualPrompt
@@ -120,43 +122,9 @@ func _spawn_sentry() -> void:
 	sentry.global_position = spawn_pos
 
 func _spawn_poison_trail() -> void:
-	var poison = Area2D.new()
-	poison.collision_layer = 0
-	poison.collision_mask = 1 # Only look for player
-	
-	var col = CollisionShape2D.new()
-	var shape = CircleShape2D.new()
-	shape.radius = 24.0
-	col.shape = shape
-	poison.add_child(col)
-	
-	var vis = ColorRect.new()
-	vis.color = Color(0.0, 0.8, 0.0, 0.5)
-	vis.position = Vector2(-24, -24)
-	vis.size = Vector2(48, 48)
-	poison.add_child(vis)
-	
+	var poison = POISON_SCENE.instantiate()
 	get_parent().add_child(poison)
 	poison.global_position = global_position
-	
-	# Small script to apply poison damage
-	var gd_script = GDScript.new()
-	gd_script.source_code = """
-extends Area2D
-var tick = 0.5
-func _physics_process(delta: float):
-	tick -= delta
-	if tick <= 0.0:
-		tick = 0.5
-		for body in get_overlapping_bodies():
-			if body.has_method('take_damage'): body.take_damage(1, Vector2.ZERO, 'poison')
-	"""
-	gd_script.reload()
-	poison.set_script(gd_script)
-	poison.set_process_internal(true)
-	
-	await get_tree().create_timer(4.0).timeout
-	if is_instance_valid(poison): poison.queue_free()
 
 func _shoot_projectile() -> void:
 	if not is_instance_valid(player_ref): return
