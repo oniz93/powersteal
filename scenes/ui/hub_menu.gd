@@ -66,3 +66,9 @@ func _on_start_pressed() -> void:
 		3: get_tree().change_scene_to_file("res://scenes/rooms/boss4_arena.tscn")
 		4: get_tree().change_scene_to_file("res://scenes/rooms/boss5_arena.tscn")
 		_: print("Mission not built yet!")
+
+const SETTINGS_SCENE = preload("res://scenes/ui/settings_menu.tscn")
+
+func _on_settings_pressed() -> void:
+	var settings = SETTINGS_SCENE.instantiate()
+	get_tree().root.add_child(settings)
