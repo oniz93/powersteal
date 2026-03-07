@@ -20,10 +20,10 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_bg")
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_top = 10.0
-offset_bottom = 33.0
+offset_top = 5.0
+offset_bottom = 25.0
 grow_horizontal = 2
-theme_override_font_sizes/font_size = 16
+theme_override_font_sizes/font_size = 12
 text = "POWERSTEAL - MISSION SELECT"
 horizontal_alignment = 1
 
@@ -32,45 +32,50 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 20.0
-offset_top = 40.0
-offset_right = -20.0
-offset_bottom = -20.0
+offset_left = 10.0
+offset_top = 30.0
+offset_right = -10.0
+offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 20
+theme_override_constants/separation = 15
 
 [node name="VBox_Missions" type="VBoxContainer" parent="Panel/HBox" unique_id=426742788]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_constants/separation = 4
 
 [node name="Label" type="Label" parent="Panel/HBox/VBox_Missions" unique_id=2068866087]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.5, 0.5, 0.5, 1)
-theme_override_font_sizes/font_size = 10
+theme_override_font_sizes/font_size = 8
 text = "AVAILABLE TARGETS:"
 
 [node name="MissionList" type="VBoxContainer" parent="Panel/HBox/VBox_Missions" unique_id=2139919116]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_constants/separation = 2
 
 [node name="SettingsButton" type="Button" parent="Panel/HBox/VBox_Missions" unique_id=2099204760]
 layout_mode = 2
+theme_override_font_sizes/font_size = 8
 text = "Settings"
 
 [node name="QuitButton" type="Button" parent="Panel/HBox/VBox_Missions" unique_id=2099204761]
 layout_mode = 2
+theme_override_font_sizes/font_size = 8
 text = "Quit Game"
 
 [node name="VBox_Dossier" type="VBoxContainer" parent="Panel/HBox" unique_id=1580270362]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.0
+theme_override_constants/separation = 4
 
 [node name="Label" type="Label" parent="Panel/HBox/VBox_Dossier" unique_id=1259940542]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.5, 0.5, 0.5, 1)
-theme_override_font_sizes/font_size = 10
+theme_override_font_sizes/font_size = 8
 text = "DOSSIER:"
 
 [node name="DebugUnlockButton" type="Button" parent="Panel/HBox/VBox_Dossier" unique_id=552217337]
@@ -87,19 +92,20 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 10.0
-offset_top = 10.0
-offset_right = -10.0
-offset_bottom = -10.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = -5.0
+offset_bottom = -5.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_font_sizes/normal_font_size = 10
-theme_override_font_sizes/bold_font_size = 10
+theme_override_font_sizes/normal_font_size = 8
+theme_override_font_sizes/bold_font_size = 8
 bbcode_enabled = true
 
 [node name="StartButton" type="Button" parent="Panel/HBox/VBox_Dossier" unique_id=281665466]
-custom_minimum_size = Vector2(0, 30)
+custom_minimum_size = Vector2(0, 24)
 layout_mode = 2
+theme_override_font_sizes/font_size = 10
 text = "START MISSION"
 
 [connection signal="pressed" from="Panel/HBox/VBox_Missions/SettingsButton" to="." method="_on_settings_pressed"]

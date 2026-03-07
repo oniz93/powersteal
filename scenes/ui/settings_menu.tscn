@@ -32,9 +32,10 @@ grow_vertical = 2
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_top = 8.0
-offset_bottom = 24.0
+offset_top = 4.0
+offset_bottom = 20.0
 grow_horizontal = 2
+theme_override_font_sizes/font_size = 12
 text = "SETTINGS"
 horizontal_alignment = 1
 
@@ -43,19 +44,20 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 8.0
-offset_top = 28.0
-offset_right = -8.0
-offset_bottom = -28.0
+offset_left = 4.0
+offset_top = 20.0
+offset_right = -4.0
+offset_bottom = -24.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_font_sizes/font_size = 8
 
 [node name="Graphics" type="MarginContainer" parent="Panel/TabContainer"]
 layout_mode = 2
-theme_override_constants/margin_left = 8
-theme_override_constants/margin_top = 8
-theme_override_constants/margin_right = 8
-theme_override_constants/margin_bottom = 8
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
 
 [node name="VBox" type="VBoxContainer" parent="Panel/TabContainer/Graphics"]
 layout_mode = 2
@@ -66,10 +68,12 @@ layout_mode = 2
 [node name="Label" type="Label" parent="Panel/TabContainer/Graphics/VBox/ResolutionHBox"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 8
 text = "Window Size"
 
 [node name="ResolutionOption" type="OptionButton" parent="Panel/TabContainer/Graphics/VBox/ResolutionHBox"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 8
 item_count = 4
 popup/item_0/text = "1x (480x270)"
 popup/item_0/id = 1
@@ -82,19 +86,21 @@ popup/item_3/id = 4
 
 [node name="FullscreenCheck" type="CheckButton" parent="Panel/TabContainer/Graphics/VBox"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 8
 text = "Fullscreen"
 
 [node name="VSyncCheck" type="CheckButton" parent="Panel/TabContainer/Graphics/VBox"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 8
 text = "V-Sync"
 
 [node name="Controls" type="MarginContainer" parent="Panel/TabContainer"]
 visible = false
 layout_mode = 2
-theme_override_constants/margin_left = 8
-theme_override_constants/margin_top = 8
-theme_override_constants/margin_right = 8
-theme_override_constants/margin_bottom = 8
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
 
 [node name="Scroll" type="ScrollContainer" parent="Panel/TabContainer/Controls"]
 layout_mode = 2
@@ -111,11 +117,12 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -30.0
-offset_top = -24.0
+offset_top = -22.0
 offset_right = 30.0
-offset_bottom = -4.0
+offset_bottom = -2.0
 grow_horizontal = 2
 grow_vertical = 0
+theme_override_font_sizes/font_size = 8
 text = "Close"
 
 [node name="WaitingOverlay" type="ColorRect" parent="."]
@@ -140,6 +147,7 @@ offset_right = 100.0
 offset_bottom = 13.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_font_sizes/font_size = 10
 text = "Press any key or mouse button..."
 horizontal_alignment = 1
 

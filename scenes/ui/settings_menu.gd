@@ -46,11 +46,13 @@ func _init_controls_tab() -> void:
 		
 		var lbl = Label.new()
 		lbl.text = action.capitalize()
+		lbl.add_theme_font_size_override("font_size", 8)
 		lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		hbox.add_child(lbl)
 		
 		var btn = Button.new()
 		btn.text = SettingsManager.get_event_string(action)
+		btn.add_theme_font_size_override("font_size", 8)
 		btn.custom_minimum_size = Vector2(100, 0)
 		btn.pressed.connect(_on_rebind_pressed.bind(action, btn))
 		hbox.add_child(btn)

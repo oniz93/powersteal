@@ -19,6 +19,7 @@ func _ready() -> void:
 	for i in range(5):
 		var btn = Button.new()
 		btn.text = "Mission " + str(i + 1)
+		btn.add_theme_font_size_override("font_size", 8)
 		if GameManager.is_boss_defeated(i):
 			btn.text += " [COMPLETED]"
 		

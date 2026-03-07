@@ -62,12 +62,12 @@ grow_vertical = 2
 
 [node name="Slot1Button" type="Button" parent="Panel/VBox"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 10
+theme_override_font_sizes/font_size = 8
 text = "Equip Slot 1"
 
 [node name="Slot2Button" type="Button" parent="Panel/VBox"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 10
+theme_override_font_sizes/font_size = 8
 text = "Equip Slot 2"
 
 [node name="HSeparator" type="HSeparator" parent="Panel/VBox"]
@@ -75,7 +75,7 @@ layout_mode = 2
 
 [node name="DiscardButton" type="Button" parent="Panel/VBox"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 10
+theme_override_font_sizes/font_size = 8
 text = "Discard"
 
 [connection signal="pressed" from="Panel/VBox/Slot1Button" to="." method="_on_slot1_pressed"]
