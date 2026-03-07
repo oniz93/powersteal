@@ -85,6 +85,14 @@ func _try_evasive_dash() -> void:
 		dash_direction = (perpendicular + center_dir * 0.5).normalized()
 
 func _throw_something() -> void:
+	# Reset timer based on phase immediately so we don't grab multiple crates per frame while awaiting
+	match current_state:
+		State.PHASE1: action_timer = 2.0
+		State.PHASE2: action_timer = 1.5
+		State.PHASE3: action_timer = 1.0
+		State.PHASE4: action_timer = 0.5
+		_: action_timer = 2.0
+
 	# Find a crate and throw it
 	var grabbables = get_tree().get_nodes_in_group("grabbable")
 	var valid_crates = []
@@ -93,22 +101,24 @@ func _throw_something() -> void:
 			valid_crates.append(g)
 			
 	if valid_crates.size() > 0:
-		var crate = valid_crates.pick_random()
-		crate.grab(self)
+		# Find the nearest crate
+		var nearest_crate = valid_crates[0]
+		var min_dist = global_position.distance_squared_to(nearest_crate.global_position)
+		
+		for i in range(1, valid_crates.size()):
+			var crate = valid_crates[i]
+			var dist = global_position.distance_squared_to(crate.global_position)
+			if dist < min_dist:
+				min_dist = dist
+				nearest_crate = crate
+				
+		nearest_crate.grab(self)
 		
 		# Give it a tiny delay to float before throwing
 		await get_tree().create_timer(0.4).timeout
-		if current_state != State.DEAD and is_instance_valid(crate) and is_instance_valid(player_ref):
-			var throw_dir = crate.global_position.direction_to(player_ref.global_position)
-			crate.throw(throw_dir)
-			
-	# Reset timer based on phase
-	match current_state:
-		State.PHASE1: action_timer = 2.0
-		State.PHASE2: action_timer = 1.5
-		State.PHASE3: action_timer = 1.0
-		State.PHASE4: action_timer = 0.5
-		_: action_timer = 2.0
+		if current_state != State.DEAD and is_instance_valid(nearest_crate) and is_instance_valid(player_ref):
+			var throw_dir = nearest_crate.global_position.direction_to(player_ref.global_position)
+			nearest_crate.throw(throw_dir)
 
 func _on_damage_taken() -> void:
 	var old_color = sprite.color

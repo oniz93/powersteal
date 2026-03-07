@@ -137,6 +137,21 @@ func _start_telegraph(pos: Vector2, duration: float) -> void:
 func _execute_blink() -> void:
 	is_telegraphing = false
 	
+	# Set up next cooldown immediately before any await
+	if current_state == State.PHASE4 and is_in_chain:
+		path_index += 1
+		if path_index >= current_path.size():
+			is_in_chain = false
+			blink_cooldown = 1.5 # Rest after chain
+		else:
+			blink_cooldown = 0.1 # Very fast chain
+	else:
+		match current_state:
+			State.PHASE1: blink_cooldown = 1.5
+			State.PHASE2: blink_cooldown = 1.0
+			State.PHASE3: blink_cooldown = 0.6
+			_: blink_cooldown = 1.0
+	
 	# Ghost at start
 	_spawn_ghost(global_position)
 	
@@ -166,21 +181,6 @@ func _execute_blink() -> void:
 	await get_tree().create_timer(0.1).timeout
 	if current_state != State.DEAD:
 		attack_shape.disabled = true
-	
-	# Set up next cooldown
-	if current_state == State.PHASE4 and is_in_chain:
-		path_index += 1
-		if path_index >= current_path.size():
-			is_in_chain = false
-			blink_cooldown = 1.5 # Rest after chain
-		else:
-			blink_cooldown = 0.1 # Very fast chain
-	else:
-		match current_state:
-			State.PHASE1: blink_cooldown = 1.5
-			State.PHASE2: blink_cooldown = 1.0
-			State.PHASE3: blink_cooldown = 0.6
-			_: blink_cooldown = 1.0
 
 func _spawn_ghost(pos: Vector2) -> void:
 	var ghost = ColorRect.new()
