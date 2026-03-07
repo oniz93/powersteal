@@ -38,6 +38,12 @@ func _on_boss_phase_changed(_new_phase: int) -> void:
 	
 func _on_boss_died() -> void:
 	boss_health_bar.visible = false
+	
+	# Destroy all turrets when the boss dies
+	var minions = get_tree().get_nodes_in_group("hunter_minions")
+	for m in minions:
+		if is_instance_valid(m):
+			m.queue_free()
 
 func _on_player_health_changed(new_health: int, max_health: int) -> void:
 	while player_health_bar.get_child_count() < max_health:
