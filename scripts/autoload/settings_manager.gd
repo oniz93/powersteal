@@ -5,6 +5,7 @@ const SETTINGS_PATH = "user://settings.json"
 
 var is_fullscreen: bool = false
 var is_vsync: bool = true
+var window_scale: int = 4 # Default 4x (1920x1080)
 
 # Stores the overridden events for actions. Format:
 # { "action_name": { "type": "key", "value": KEY_SPACE } }
@@ -23,6 +24,7 @@ func save_settings() -> void:
 	var data = {
 		"fullscreen": is_fullscreen,
 		"vsync": is_vsync,
+		"window_scale": window_scale,
 		"keybinds": custom_keybinds
 	}
 	var file = FileAccess.open(SETTINGS_PATH, FileAccess.WRITE)
@@ -41,6 +43,7 @@ func load_settings() -> void:
 			var data = json.data
 			is_fullscreen = data.get("fullscreen", false)
 			is_vsync = data.get("vsync", true)
+			window_scale = data.get("window_scale", 4)
 			custom_keybinds = data.get("keybinds", {})
 
 func apply_settings() -> void:
@@ -49,6 +52,12 @@ func apply_settings() -> void:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 	else:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+		# Calculate window size based on our 480x270 internal resolution
+		var new_size = Vector2i(480 * window_scale, 270 * window_scale)
+		DisplayServer.window_set_size(new_size)
+		# Center window
+		var screen_size = DisplayServer.screen_get_size()
+		DisplayServer.window_set_position((screen_size / 2) - (new_size / 2))
 		
 	if is_vsync:
 		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED)

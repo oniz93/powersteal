@@ -72,3 +72,6 @@ const SETTINGS_SCENE = preload("res://scenes/ui/settings_menu.tscn")
 func _on_settings_pressed() -> void:
 	var settings = SETTINGS_SCENE.instantiate()
 	get_tree().root.add_child(settings)
+
+func _on_quit_pressed() -> void:
+	get_tree().quit()

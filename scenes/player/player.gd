@@ -36,7 +36,7 @@ var _hit_freeze_frames_remaining: int = 0
 var _is_hit_frozen: bool = false
 
 # Health
-const MAX_HEALTH: int = 30 # HACK: Set to 30 for debugging (normally 5)
+const MAX_HEALTH: int = 5 # HACK: Set to 30 for debugging (normally 5)
 var current_health: int = MAX_HEALTH
 var invincibility_timer: float = 0.0
 const INVINCIBILITY_DURATION: float = 0.5

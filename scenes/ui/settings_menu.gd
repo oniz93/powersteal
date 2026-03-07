@@ -2,6 +2,7 @@ extends CanvasLayer
 
 @onready var fullscreen_btn = $Panel/TabContainer/Graphics/VBox/FullscreenCheck
 @onready var vsync_btn = $Panel/TabContainer/Graphics/VBox/VSyncCheck
+@onready var resolution_btn = $Panel/TabContainer/Graphics/VBox/ResolutionHBox/ResolutionOption
 
 @onready var controls_vbox = $Panel/TabContainer/Controls/Scroll/VBox
 @onready var waiting_label = $WaitingOverlay
@@ -17,8 +18,17 @@ func _init_graphics_tab() -> void:
 	fullscreen_btn.button_pressed = SettingsManager.is_fullscreen
 	vsync_btn.button_pressed = SettingsManager.is_vsync
 	
+	# Set current resolution index (scale - 1)
+	resolution_btn.selected = SettingsManager.window_scale - 1
+	
 	fullscreen_btn.toggled.connect(_on_fullscreen_toggled)
 	vsync_btn.toggled.connect(_on_vsync_toggled)
+	resolution_btn.item_selected.connect(_on_resolution_selected)
+
+func _on_resolution_selected(index: int) -> void:
+	SettingsManager.window_scale = index + 1
+	SettingsManager.apply_settings()
+	SettingsManager.save_settings()
 
 func _on_fullscreen_toggled(pressed: bool) -> void:
 	SettingsManager.is_fullscreen = pressed

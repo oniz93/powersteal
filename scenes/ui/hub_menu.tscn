@@ -1,14 +1,14 @@
 [gd_scene format=3 uid="uid://hubmenu001"]
 
-[ext_resource type="Script" path="res://scenes/ui/hub_menu.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://msfk5oojq4xp" path="res://scenes/ui/hub_menu.gd" id="1_script"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
 bg_color = Color(0.12, 0.12, 0.15, 1)
 
-[node name="HubMenu" type="CanvasLayer"]
+[node name="HubMenu" type="CanvasLayer" unique_id=505177871]
 script = ExtResource("1_script")
 
-[node name="Panel" type="Panel" parent="."]
+[node name="Panel" type="Panel" parent="." unique_id=2127176265]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -16,7 +16,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_bg")
 
-[node name="Title" type="Label" parent="Panel"]
+[node name="Title" type="Label" parent="Panel" unique_id=836733465]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -27,7 +27,7 @@ theme_override_font_sizes/font_size = 16
 text = "POWERSTEAL - MISSION SELECT"
 horizontal_alignment = 1
 
-[node name="HBox" type="HBoxContainer" parent="Panel"]
+[node name="HBox" type="HBoxContainer" parent="Panel" unique_id=642703038]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -40,45 +40,49 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 20
 
-[node name="VBox_Missions" type="VBoxContainer" parent="Panel/HBox"]
+[node name="VBox_Missions" type="VBoxContainer" parent="Panel/HBox" unique_id=426742788]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Label" type="Label" parent="Panel/HBox/VBox_Missions"]
+[node name="Label" type="Label" parent="Panel/HBox/VBox_Missions" unique_id=2068866087]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.5, 0.5, 0.5, 1)
 theme_override_font_sizes/font_size = 10
 text = "AVAILABLE TARGETS:"
 
-[node name="MissionList" type="VBoxContainer" parent="Panel/HBox/VBox_Missions"]
+[node name="MissionList" type="VBoxContainer" parent="Panel/HBox/VBox_Missions" unique_id=2139919116]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="SettingsButton" type="Button" parent="Panel/HBox/VBox_Missions"]
+[node name="SettingsButton" type="Button" parent="Panel/HBox/VBox_Missions" unique_id=2099204760]
 layout_mode = 2
 text = "Settings"
 
-[node name="VBox_Dossier" type="VBoxContainer" parent="Panel/HBox"]
+[node name="QuitButton" type="Button" parent="Panel/HBox/VBox_Missions" unique_id=2099204761]
+layout_mode = 2
+text = "Quit Game"
+
+[node name="VBox_Dossier" type="VBoxContainer" parent="Panel/HBox" unique_id=1580270362]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.0
 
-[node name="Label" type="Label" parent="Panel/HBox/VBox_Dossier"]
+[node name="Label" type="Label" parent="Panel/HBox/VBox_Dossier" unique_id=1259940542]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.5, 0.5, 0.5, 1)
 theme_override_font_sizes/font_size = 10
 text = "DOSSIER:"
 
-[node name="DebugUnlockButton" type="Button" parent="Panel/HBox/VBox_Dossier"]
+[node name="DebugUnlockButton" type="Button" parent="Panel/HBox/VBox_Dossier" unique_id=552217337]
 layout_mode = 2
 theme_override_font_sizes/font_size = 8
 text = "[DEBUG] Unlock All"
 
-[node name="Panel" type="Panel" parent="Panel/HBox/VBox_Dossier"]
+[node name="Panel" type="Panel" parent="Panel/HBox/VBox_Dossier" unique_id=1461411402]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Panel/HBox/VBox_Dossier/Panel"]
+[node name="RichTextLabel" type="RichTextLabel" parent="Panel/HBox/VBox_Dossier/Panel" unique_id=222828760]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -93,10 +97,11 @@ theme_override_font_sizes/normal_font_size = 10
 theme_override_font_sizes/bold_font_size = 10
 bbcode_enabled = true
 
-[node name="StartButton" type="Button" parent="Panel/HBox/VBox_Dossier"]
+[node name="StartButton" type="Button" parent="Panel/HBox/VBox_Dossier" unique_id=281665466]
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 text = "START MISSION"
 
 [connection signal="pressed" from="Panel/HBox/VBox_Missions/SettingsButton" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="Panel/HBox/VBox_Missions/QuitButton" to="." method="_on_quit_pressed"]
 [connection signal="pressed" from="Panel/HBox/VBox_Dossier/StartButton" to="." method="_on_start_pressed"]

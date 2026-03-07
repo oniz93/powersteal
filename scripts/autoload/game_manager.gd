@@ -21,9 +21,6 @@ const PAUSE_MENU_SCENE = preload("res://scenes/ui/pause_menu.tscn")
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS # Allow GameManager to process input during pause
-	# Force window to 1080p for testing
-	DisplayServer.window_set_size(Vector2i(1920, 1080))
-	DisplayServer.window_set_position(Vector2i(0, 0)) # Center roughly, depends on OS
 	load_game()
 
 func _input(event: InputEvent) -> void:
