@@ -75,28 +75,11 @@ func trigger_power_swap(power_id: StringName) -> void:
 		
 	var tree = get_tree()
 	
-	# If there's an empty slot, don't show the menu, just equip it automatically
-	var empty_slot = PowerManager.get_first_empty_slot()
-	if empty_slot != -1:
-		var power_path = "res://scenes/player/powers/" + power_id.trim_suffix("s") + ".gd"
-		var power_script = load(power_path)
-		if power_script:
-			var power_node = power_script.new()
-			PowerManager.add_child(power_node)
-			if empty_slot == 0:
-				PowerManager.slot1 = power_node
-			else:
-				PowerManager.slot2 = power_node
-			PowerManager.equip_power(empty_slot, power_id)
+	# Show energy bar if it's the first power
+	if power_id == "fireballs" and not PowerManager.energy_bar_visible:
+		PowerManager.reveal_energy_bar()
 		
-		# Show energy bar if it's the first power
-		if power_id == "fireballs" and not PowerManager.energy_bar_visible:
-			PowerManager.reveal_energy_bar()
-			
-		_finish_mission()
-		return
-
-	# Show swap menu
+	# Show swap menu (always show it so the player knows what they got and can choose the slot)
 	tree.paused = true
 	var swap_menu = POWER_SWAP_SCENE.instantiate()
 	tree.root.add_child(swap_menu)
