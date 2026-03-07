@@ -148,7 +148,8 @@ func _physics_process(delta: float) -> void:
 	if dash_cooldown_timer > 0.0:
 		dash_cooldown_timer -= delta
 
-	move_and_slide()
+	if current_state != State.DEAD:
+		move_and_slide()
 
 
 func _process(_delta: float) -> void:
@@ -477,7 +478,7 @@ func _update_invincibility(delta: float) -> void:
 func _die() -> void:
 	current_state = State.DEAD
 	velocity = Vector2.ZERO
-	melee_shape.disabled = true
+	melee_shape.set_deferred("disabled", true)
 	player_died.emit()
 
 	# Brief death visual

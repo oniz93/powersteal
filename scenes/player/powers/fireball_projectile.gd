@@ -1,9 +1,9 @@
 extends Area2D
 ## The projectile fired by the Fireball power (and the Hothead boss)
 
-const SPEED: float = 300.0
+var SPEED: float = 300.0
 const DAMAGE: int = 1
-const LIFETIME: float = 2.0
+var LIFETIME: float = 2.0
 
 const FIRE_PATCH_SCENE: PackedScene = preload("res://scenes/player/powers/fire_patch.tscn")
 
