@@ -2,7 +2,7 @@ extends CharacterBody2D
 ## Gadget Sentry - Shoots at player and emits an EMP zone
 
 const MAX_HEALTH: int = 3
-const SHOOT_COOLDOWN: float = 2.0
+const SHOOT_COOLDOWN: float = 4.0
 const PROJECTILE_SCENE = preload("res://scenes/player/powers/fireball_projectile.tscn")
 
 var current_health: int = MAX_HEALTH

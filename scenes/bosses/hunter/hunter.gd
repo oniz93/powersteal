@@ -30,7 +30,7 @@ func _ready() -> void:
 	super._ready()
 
 func take_damage(amount: int, from_direction: Vector2 = Vector2.ZERO, damage_type: String = "physical") -> void:
-	if damage_type == "poison" or damage_type == "fire":
+	if damage_type == "poison":
 		return
 	super.take_damage(amount, from_direction, damage_type)
 
@@ -59,7 +59,7 @@ func _physics_process(delta: float) -> void:
 		var minions = get_tree().get_nodes_in_group("hunter_minions")
 		if minions.size() < 2:
 			_spawn_sentry()
-			sentry_cooldown = 10.0
+			sentry_cooldown = 15.0
 			
 	if current_state >= State.PHASE2:
 		poison_timer -= delta
@@ -99,9 +99,9 @@ func _do_random_action() -> void:
 	var r = randf()
 	if current_state >= State.PHASE3 and r < 0.2:
 		_melee_combo()
-	elif r < 0.4:
+	elif r < 0.35:
 		_throw_flash()
-	elif r < 0.7:
+	elif r < 0.6:
 		_shoot_grapple()
 	else:
 		_shoot_projectile()
@@ -157,7 +157,7 @@ func _melee_combo() -> void:
 			body.take_damage(1, dir, "physical")
 
 func _throw_flash() -> void:
-	# A quick flashbang that slows player briefly
+	# A quick flashbang
 	if not is_instance_valid(player_ref): return
 	
 	# Visual flash
@@ -169,8 +169,8 @@ func _throw_flash() -> void:
 	tw.tween_property(flash, "modulate:a", 0.0, 0.5)
 	tw.tween_callback(flash.queue_free)
 	
-	if player_ref.has_method("apply_slow"):
-		player_ref.apply_slow(1.0) # stun effect
+	if player_ref.has_method("_apply_screen_shake"):
+		player_ref._apply_screen_shake(4.0)
 
 func _shoot_grapple() -> void:
 	if not is_instance_valid(player_ref): return
