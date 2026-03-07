@@ -85,14 +85,19 @@ func _apply_global_slow() -> void:
 		player_ref.apply_slow(dur)
 		
 	# Visual cue
+	var canvas = CanvasLayer.new()
+	canvas.layer = 100
+	get_tree().root.add_child(canvas)
+	
 	var flash = ColorRect.new()
 	flash.color = Color.WHITE
 	flash.color.a = 0.3
 	flash.set_anchors_preset(Control.PRESET_FULL_RECT)
-	get_tree().root.add_child(flash)
+	canvas.add_child(flash)
+	
 	var tw = create_tween()
 	tw.tween_property(flash, "modulate:a", 0.0, 0.5)
-	tw.tween_callback(flash.queue_free)
+	tw.tween_callback(canvas.queue_free)
 	
 	# Boss speeds up in later phases
 	if current_state >= State.PHASE2:

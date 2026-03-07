@@ -161,18 +161,20 @@ func _throw_flash() -> void:
 	if not is_instance_valid(player_ref): return
 	
 	# Visual flash
+	var canvas = CanvasLayer.new()
+	canvas.layer = 100 # Put it on a top canvas layer so it overlays the camera
+	get_tree().root.add_child(canvas)
+	
 	var flash = ColorRect.new()
 	flash.color = Color.WHITE
 	flash.set_anchors_preset(Control.PRESET_FULL_RECT)
-	# Set a high z_index so it covers everything including the map
-	flash.z_index = 100 
-	get_tree().root.add_child(flash)
+	canvas.add_child(flash)
 	
 	var tw = create_tween()
 	# Hold full white for 0.5s, then fade out over 2.5s (3s total)
 	tw.tween_interval(0.5)
 	tw.tween_property(flash, "modulate:a", 0.0, 2.5)
-	tw.tween_callback(flash.queue_free)
+	tw.tween_callback(canvas.queue_free)
 	
 	if player_ref.has_method("_apply_screen_shake"):
 		player_ref._apply_screen_shake(4.0)
