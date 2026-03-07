@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://scenes/ui/settings_menu.gd" id="1_script"]
 
 [node name="SettingsMenu" type="CanvasLayer"]
+process_mode = 3
 layer = 100
 script = ExtResource("1_script")
 

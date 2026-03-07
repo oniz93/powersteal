@@ -17,12 +17,25 @@ signal boss_defeated(boss_index: int)
 signal power_first_acquired
 
 const SAVE_PATH = "user://save_data.json"
+const PAUSE_MENU_SCENE = preload("res://scenes/ui/pause_menu.tscn")
 
 func _ready() -> void:
+	process_mode = Node.PROCESS_MODE_ALWAYS # Allow GameManager to process input during pause
 	# Force window to 1080p for testing
 	DisplayServer.window_set_size(Vector2i(1920, 1080))
 	DisplayServer.window_set_position(Vector2i(0, 0)) # Center roughly, depends on OS
 	load_game()
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("pause"):
+		var tree = get_tree()
+		
+		# Don't pause if we are already in the hub menu or a menu is already open
+		if tree.current_scene.name == "HubMenu" or tree.paused:
+			return
+			
+		var pause_menu = PAUSE_MENU_SCENE.instantiate()
+		tree.root.add_child(pause_menu)
 
 func mark_boss_defeated(index: int) -> void:
 	if index >= 0 and index < bosses_defeated.size():
