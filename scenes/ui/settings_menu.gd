@@ -18,15 +18,25 @@ func _init_graphics_tab() -> void:
 	fullscreen_btn.button_pressed = SettingsManager.is_fullscreen
 	vsync_btn.button_pressed = SettingsManager.is_vsync
 	
-	# Set current resolution index (scale - 1)
-	resolution_btn.selected = SettingsManager.window_scale - 1
+	# Set current resolution index
+	if SettingsManager.window_scale == 1.0:
+		resolution_btn.selected = 0
+	elif SettingsManager.window_scale == 1.5:
+		resolution_btn.selected = 1
+	elif SettingsManager.window_scale == 2.0:
+		resolution_btn.selected = 2
+	else:
+		resolution_btn.selected = 0
 	
 	fullscreen_btn.toggled.connect(_on_fullscreen_toggled)
 	vsync_btn.toggled.connect(_on_vsync_toggled)
 	resolution_btn.item_selected.connect(_on_resolution_selected)
 
 func _on_resolution_selected(index: int) -> void:
-	SettingsManager.window_scale = index + 1
+	match index:
+		0: SettingsManager.window_scale = 1.0
+		1: SettingsManager.window_scale = 1.5
+		2: SettingsManager.window_scale = 2.0
 	SettingsManager.apply_settings()
 	SettingsManager.save_settings()
 
@@ -46,14 +56,14 @@ func _init_controls_tab() -> void:
 		
 		var lbl = Label.new()
 		lbl.text = action.capitalize()
-		lbl.add_theme_font_size_override("font_size", 8)
+		lbl.add_theme_font_size_override("font_size", 22)
 		lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		hbox.add_child(lbl)
 		
 		var btn = Button.new()
 		btn.text = SettingsManager.get_event_string(action)
-		btn.add_theme_font_size_override("font_size", 8)
-		btn.custom_minimum_size = Vector2(100, 0)
+		btn.add_theme_font_size_override("font_size", 22)
+		btn.custom_minimum_size = Vector2(250, 0)
 		btn.pressed.connect(_on_rebind_pressed.bind(action, btn))
 		hbox.add_child(btn)
 		

@@ -51,6 +51,10 @@ wait_time = 0.1
 one_shot = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(1, 1)
+limit_left = 0
+limit_top = 0
+limit_right = 2560
+limit_bottom = 1440
+position_smoothing_enabled = true
 
 [connection signal="timeout" from="HitFlashTimer" to="." method="_on_hit_flash_timer_timeout"]

@@ -5,7 +5,7 @@ const SETTINGS_PATH = "user://settings.json"
 
 var is_fullscreen: bool = false
 var is_vsync: bool = true
-var window_scale: int = 4 # Default 4x (1920x1080)
+var window_scale: float = 1.0 # Default 1x (1280x720)
 
 # Stores the overridden events for actions. Format:
 # { "action_name": { "type": "key", "value": KEY_SPACE } }
@@ -47,17 +47,20 @@ func load_settings() -> void:
 			custom_keybinds = data.get("keybinds", {})
 
 func apply_settings() -> void:
+	var window = get_window()
+	
 	# Apply Video Settings
 	if is_fullscreen:
-		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+		window.mode = Window.MODE_FULLSCREEN
 	else:
-		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
-		# Calculate window size based on our 480x270 internal resolution
-		var new_size = Vector2i(480 * window_scale, 270 * window_scale)
-		DisplayServer.window_set_size(new_size)
+		window.mode = Window.MODE_WINDOWED
+		# Calculate window size based on our 1280x720 internal resolution
+		var new_size = Vector2i(1280 * window_scale, 720 * window_scale)
+		window.size = new_size
+		
 		# Center window
 		var screen_size = DisplayServer.screen_get_size()
-		DisplayServer.window_set_position((screen_size / 2) - (new_size / 2))
+		window.position = (screen_size / 2) - (new_size / 2)
 		
 	if is_vsync:
 		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED)

@@ -6,18 +6,18 @@
 [ext_resource type="PackedScene" uid="uid://hurler001" path="res://scenes/bosses/hurler/hurler.tscn" id="5_boss"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hwall"]
-size = Vector2(640, 16)
+size = Vector2(2560, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vwall"]
-size = Vector2(16, 360)
+size = Vector2(16, 1440)
 
 [node name="Boss2Arena" type="Node2D"]
 script = ExtResource("4_script")
 
 [node name="Floor" type="ColorRect" parent="."]
 z_index = -1
-offset_right = 640.0
-offset_bottom = 360.0
+offset_right = 2560.0
+offset_bottom = 1440.0
 color = Color(0.1, 0.1, 0.15, 1)
 
 [node name="Walls" type="Node2D" parent="."]
@@ -27,13 +27,13 @@ collision_layer = 4
 collision_mask = 0
 
 [node name="Col" type="CollisionShape2D" parent="Walls/WallTop"]
-position = Vector2(320, -8)
+position = Vector2(1280, -8)
 shape = SubResource("RectangleShape2D_hwall")
 
 [node name="Sprite" type="ColorRect" parent="Walls/WallTop"]
 offset_left = -8.0
 offset_top = -16.0
-offset_right = 648.0
+offset_right = 2568.0
 offset_bottom = 0.0
 color = Color(0.2, 0.2, 0.3, 1)
 
@@ -42,14 +42,14 @@ collision_layer = 4
 collision_mask = 0
 
 [node name="Col" type="CollisionShape2D" parent="Walls/WallBottom"]
-position = Vector2(320, 368)
+position = Vector2(1280, 1448)
 shape = SubResource("RectangleShape2D_hwall")
 
 [node name="Sprite" type="ColorRect" parent="Walls/WallBottom"]
 offset_left = -8.0
-offset_top = 360.0
-offset_right = 648.0
-offset_bottom = 376.0
+offset_top = 1440.0
+offset_right = 2568.0
+offset_bottom = 1456.0
 color = Color(0.2, 0.2, 0.3, 1)
 
 [node name="WallLeft" type="StaticBody2D" parent="Walls"]
@@ -57,14 +57,14 @@ collision_layer = 4
 collision_mask = 0
 
 [node name="Col" type="CollisionShape2D" parent="Walls/WallLeft"]
-position = Vector2(-8, 180)
+position = Vector2(-8, 720)
 shape = SubResource("RectangleShape2D_vwall")
 
 [node name="Sprite" type="ColorRect" parent="Walls/WallLeft"]
 offset_left = -16.0
 offset_top = -8.0
 offset_right = 0.0
-offset_bottom = 368.0
+offset_bottom = 1448.0
 color = Color(0.2, 0.2, 0.3, 1)
 
 [node name="WallRight" type="StaticBody2D" parent="Walls"]
@@ -72,38 +72,38 @@ collision_layer = 4
 collision_mask = 0
 
 [node name="Col" type="CollisionShape2D" parent="Walls/WallRight"]
-position = Vector2(648, 180)
+position = Vector2(2568, 720)
 shape = SubResource("RectangleShape2D_vwall")
 
 [node name="Sprite" type="ColorRect" parent="Walls/WallRight"]
-offset_left = 640.0
+offset_left = 2560.0
 offset_top = -8.0
-offset_right = 656.0
-offset_bottom = 368.0
+offset_right = 2576.0
+offset_bottom = 1448.0
 color = Color(0.2, 0.2, 0.3, 1)
 
 [node name="Player" parent="." instance=ExtResource("2_player")]
-position = Vector2(320, 300)
+position = Vector2(1280, 1200)
 
 [node name="Hurler" parent="." instance=ExtResource("5_boss")]
-position = Vector2(320, 80)
+position = Vector2(1280, 240)
 
 [node name="Crates" type="Node2D" parent="."]
 
 [node name="ThrowableCrate" parent="Crates" instance=ExtResource("3_crate")]
-position = Vector2(174, 137)
+position = Vector2(600, 500)
 
 [node name="ThrowableCrate2" parent="Crates" instance=ExtResource("3_crate")]
-position = Vector2(207, 107)
+position = Vector2(800, 400)
 
 [node name="ThrowableCrate3" parent="Crates" instance=ExtResource("3_crate")]
-position = Vector2(418, 140)
+position = Vector2(1760, 560)
 
 [node name="ThrowableCrate4" parent="Crates" instance=ExtResource("3_crate")]
-position = Vector2(434, 186)
+position = Vector2(1900, 800)
 
 [node name="ThrowableCrate5" parent="Crates" instance=ExtResource("3_crate")]
-position = Vector2(258, 222)
+position = Vector2(1000, 900)
 
 [node name="HUD" type="CanvasLayer" parent="."]
 
@@ -111,15 +111,16 @@ position = Vector2(258, 222)
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -60.0
-offset_top = 8.0
-offset_right = -8.0
-offset_bottom = 32.0
+offset_left = -220.0
+offset_top = 40.0
+offset_right = -40.0
+offset_bottom = 120.0
 grow_horizontal = 0
+theme_override_constants/separation = 15
 alignment = 2
 
 [node name="Slot1" type="ColorRect" parent="HUD/PowerSlots"]
-custom_minimum_size = Vector2(24, 24)
+custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
 color = Color(0.2, 0.2, 0.2, 0.5)
 
@@ -130,13 +131,13 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_font_sizes/font_size = 8
+theme_override_font_sizes/font_size = 32
 text = "R2"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Slot2" type="ColorRect" parent="HUD/PowerSlots"]
-custom_minimum_size = Vector2(24, 24)
+custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
 color = Color(0.2, 0.2, 0.2, 0.5)
 
@@ -147,59 +148,68 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_font_sizes/font_size = 8
+theme_override_font_sizes/font_size = 32
 text = "L2"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="EnergyBar" type="ProgressBar" parent="HUD"]
 visible = false
-offset_left = 8.0
-offset_top = 20.0
-offset_right = 78.0
-offset_bottom = 26.0
+offset_left = 40.0
+offset_top = 90.0
+offset_right = 340.0
+offset_bottom = 110.0
 max_value = 100.0
 value = 0.0
 show_percentage = false
 
 [node name="HealthBar" type="HBoxContainer" parent="HUD"]
-offset_left = 8.0
-offset_top = 8.0
-offset_right = 88.0
-offset_bottom = 18.0
+offset_left = 40.0
+offset_top = 40.0
+offset_right = 380.0
+offset_bottom = 75.0
+theme_override_constants/separation = 8
 
 [node name="Pip1" type="ColorRect" parent="HUD/HealthBar"]
-custom_minimum_size = Vector2(12, 8)
+custom_minimum_size = Vector2(60, 30)
 color = Color(0.8, 0, 0, 1)
 
 [node name="Pip2" type="ColorRect" parent="HUD/HealthBar"]
-custom_minimum_size = Vector2(12, 8)
+custom_minimum_size = Vector2(60, 30)
 color = Color(0.8, 0, 0, 1)
 
 [node name="Pip3" type="ColorRect" parent="HUD/HealthBar"]
-custom_minimum_size = Vector2(12, 8)
+custom_minimum_size = Vector2(60, 30)
 color = Color(0.8, 0, 0, 1)
 
 [node name="Pip4" type="ColorRect" parent="HUD/HealthBar"]
-custom_minimum_size = Vector2(12, 8)
+custom_minimum_size = Vector2(60, 30)
 color = Color(0.8, 0, 0, 1)
 
 [node name="Pip5" type="ColorRect" parent="HUD/HealthBar"]
-custom_minimum_size = Vector2(12, 8)
+custom_minimum_size = Vector2(60, 30)
 color = Color(0.8, 0, 0, 1)
 
 [node name="BossHealthBar" type="ProgressBar" parent="HUD"]
-offset_left = 40.0
-offset_top = 250.0
-offset_right = 440.0
-offset_bottom = 260.0
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -500.0
+offset_top = -80.0
+offset_right = 500.0
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 show_percentage = false
 
 [node name="BossName" type="Label" parent="HUD/BossHealthBar"]
 layout_mode = 0
-offset_top = -14.0
-offset_right = 60.0
+offset_top = -45.0
+offset_right = 300.0
 offset_bottom = 0.0
-theme_override_font_sizes/font_size = 10
+theme_override_font_sizes/font_size = 32
 text = "THE HURLER"
+

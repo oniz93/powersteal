@@ -29,10 +29,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -100.0
-offset_top = -60.0
-offset_right = 100.0
-offset_bottom = 60.0
+offset_left = -250.0
+offset_top = -150.0
+offset_right = 250.0
+offset_bottom = 150.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_bg")
@@ -41,9 +41,10 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_bg")
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 23.0
+offset_top = 10.0
+offset_bottom = 60.0
 grow_horizontal = 2
-theme_override_font_sizes/font_size = 12
+theme_override_font_sizes/font_size = 32
 text = "Acquired: Power"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -53,21 +54,22 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 10.0
-offset_top = 30.0
-offset_right = -10.0
-offset_bottom = -10.0
+offset_left = 30.0
+offset_top = 80.0
+offset_right = -30.0
+offset_bottom = -30.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 15
 
 [node name="Slot1Button" type="Button" parent="Panel/VBox"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 8
+theme_override_font_sizes/font_size = 22
 text = "Equip Slot 1"
 
 [node name="Slot2Button" type="Button" parent="Panel/VBox"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 8
+theme_override_font_sizes/font_size = 22
 text = "Equip Slot 2"
 
 [node name="HSeparator" type="HSeparator" parent="Panel/VBox"]
@@ -75,7 +77,7 @@ layout_mode = 2
 
 [node name="DiscardButton" type="Button" parent="Panel/VBox"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 8
+theme_override_font_sizes/font_size = 22
 text = "Discard"
 
 [connection signal="pressed" from="Panel/VBox/Slot1Button" to="." method="_on_slot1_pressed"]

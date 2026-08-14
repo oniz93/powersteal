@@ -27,15 +27,15 @@ func _ready() -> void:
 	max_health = 35
 	granted_power_id = &"blink"
 	
-	# Define arena waypoints (assumes a 640x360 room like Boss 1 and 2)
+	# Define arena waypoints (centered in 2560x1440)
 	waypoints = [
-		Vector2(100, 100), # 0: Top left
-		Vector2(320, 100), # 1: Top center
-		Vector2(540, 100), # 2: Top right
-		Vector2(100, 260), # 3: Bottom left
-		Vector2(320, 260), # 4: Bottom center
-		Vector2(540, 260), # 5: Bottom right
-		Vector2(320, 180), # 6: Center
+		Vector2(840, 400), # 0: Top left
+		Vector2(1280, 400), # 1: Top center
+		Vector2(1720, 400), # 2: Top right
+		Vector2(840, 1040), # 3: Bottom left
+		Vector2(1280, 1040), # 4: Bottom center
+		Vector2(1720, 1040), # 5: Bottom right
+		Vector2(1280, 720), # 6: Center
 	]
 	
 	attack_shape.disabled = true
@@ -92,9 +92,9 @@ func _start_next_move() -> void:
 			var dir_from_player = player_ref.aim_direction * -1
 			var backstab_pos = player_ref.global_position + (dir_from_player * 80.0)
 			
-			# Clamp to room bounds
-			backstab_pos.x = clamp(backstab_pos.x, 30, 610)
-			backstab_pos.y = clamp(backstab_pos.y, 30, 330)
+			# Clamp to room bounds (2560x1440)
+			backstab_pos.x = clamp(backstab_pos.x, 100, 2460)
+			backstab_pos.y = clamp(backstab_pos.y, 100, 1340)
 			
 			_start_telegraph(backstab_pos, 0.3)
 			
