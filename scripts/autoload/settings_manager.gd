@@ -16,6 +16,9 @@ const REMAPPABLE_ACTIONS = [
 	"dash", "melee", "power1", "power2", "interact"
 ]
 
+# Valid window multipliers for the 1280x720 base resolution.
+const VALID_WINDOW_SCALES: Array[float] = [1.0, 1.5, 2.0]
+
 func _ready() -> void:
 	load_settings()
 	apply_settings()
@@ -43,7 +46,7 @@ func load_settings() -> void:
 			var data = json.data
 			is_fullscreen = data.get("fullscreen", false)
 			is_vsync = data.get("vsync", true)
-			window_scale = data.get("window_scale", 4)
+			window_scale = _sanitize_window_scale(data.get("window_scale", 1.0))
 			custom_keybinds = data.get("keybinds", {})
 
 func apply_settings() -> void:
@@ -81,6 +84,20 @@ func apply_settings() -> void:
 						
 				InputMap.action_add_event(action, event)
 
+## Returns the saved scale if it is a supported multiplier, otherwise 1x.
+## Old saves stored an integer scale for the 480x270 base (e.g. 4 for 1080p),
+## which no longer maps cleanly onto the 1280x720 base resolution.
+func _sanitize_window_scale(value) -> float:
+	if value is int or value is float:
+		var scale := float(value)
+		if scale in VALID_WINDOW_SCALES:
+			return scale
+	elif value is String and value.is_valid_float():
+		var parsed: float = value.to_float()
+		if parsed in VALID_WINDOW_SCALES:
+			return parsed
+	return 1.0
+
 func update_keybind(action: String, event: InputEvent) -> void:
 	if not action in REMAPPABLE_ACTIONS: return
 	
@@ -111,11 +128,11 @@ func _dict_to_event(data: Dictionary) -> InputEvent:
 	
 	if data["type"] == "key":
 		var e = InputEventKey.new()
-		e.physical_keycode = data["value"]
+		e.physical_keycode = int(data["value"])
 		return e
 	elif data["type"] == "mouse":
 		var e = InputEventMouseButton.new()
-		e.button_index = data["value"]
+		e.button_index = int(data["value"])
 		return e
 	return null
 
