@@ -9,7 +9,7 @@ var lifetime_timer: float = 0.0
 var tick_timer: float = 0.5 # Start ready to tick
 
 func _physics_process(delta: float) -> void:
-	if PowerManager.has_method("is_time_frozen") and PowerManager.get("is_time_frozen"):
+	if PowerManager.is_time_frozen:
 		return
 		
 	lifetime_timer += delta

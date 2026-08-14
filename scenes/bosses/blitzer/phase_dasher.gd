@@ -29,7 +29,7 @@ func _physics_process(delta: float) -> void:
 	if current_state == State.DEAD:
 		return
 		
-	if PowerManager.has_method("is_time_frozen") and PowerManager.get("is_time_frozen"):
+	if PowerManager.is_time_frozen:
 		return
 		
 	if knockback_velocity.length() > 10.0:

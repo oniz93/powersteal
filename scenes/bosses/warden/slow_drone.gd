@@ -16,7 +16,7 @@ func _ready() -> void:
 	patrol_center = global_position
 
 func _physics_process(delta: float) -> void:
-	if PowerManager.has_method("is_time_frozen") and PowerManager.get("is_time_frozen"):
+	if PowerManager.is_time_frozen:
 		return
 		
 	# Simple circular patrol
