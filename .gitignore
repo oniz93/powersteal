@@ -1,5 +1,9 @@
 # Godot 4+ specific ignores
 .godot/
 /android/
+/build/
 save_data.json
 *.json
+
+# OS metadata
+.DS_Store
