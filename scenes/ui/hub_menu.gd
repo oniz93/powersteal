@@ -75,5 +75,9 @@ func _on_settings_pressed() -> void:
 	var settings = SETTINGS_SCENE.instantiate()
 	get_tree().root.add_child(settings)
 
+func _on_new_game_pressed() -> void:
+	GameManager.reset_for_new_game()
+	get_tree().reload_current_scene()
+
 func _on_quit_pressed() -> void:
 	get_tree().quit()

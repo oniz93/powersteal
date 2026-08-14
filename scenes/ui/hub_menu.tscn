@@ -56,6 +56,12 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 10
 
+[node name="NewGameButton" type="Button" parent="Panel/HBox/VBox_Missions"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "New Game"
+
 [node name="SettingsButton" type="Button" parent="Panel/HBox/VBox_Missions" unique_id=2099204760]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
@@ -110,6 +116,7 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "START MISSION"
 
+[connection signal="pressed" from="Panel/HBox/VBox_Missions/NewGameButton" to="." method="_on_new_game_pressed"]
 [connection signal="pressed" from="Panel/HBox/VBox_Missions/SettingsButton" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="Panel/HBox/VBox_Missions/QuitButton" to="." method="_on_quit_pressed"]
 [connection signal="pressed" from="Panel/HBox/VBox_Dossier/StartButton" to="." method="_on_start_pressed"]
