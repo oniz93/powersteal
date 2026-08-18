@@ -184,9 +184,5 @@ func reset_for_new_game() -> void:
 	carried_energy = 0.0
 	room_entry_energy = 0.0
 	first_power_acquired = false
-	bosses_defeated = [false, false, false, false, false]
-	current_boss_index = 0
-	current_room_index = 0
-	carried_energy = 0.0
-	room_entry_energy = 0.0
-	first_power_acquired = false
+	PowerManager.reset()
+	save_game()
