@@ -13,13 +13,22 @@ func _init() -> void:
 	power_color = Color("#9B30FF") # Purple
 	energy_cost = GRAB_COST # Initial cost just to grab
 
+func activate() -> bool:
+	# Don't pay the grab cost if something is already held. PowerBase.activate()
+	# consumes energy before _do_effect(), so a repeat press would otherwise
+	# drain 15 energy for no effect.
+	if is_instance_valid(grabbed_object):
+		return false
+	return super.activate()
+
+
 func _do_effect() -> void:
 	if not is_instance_valid(player_ref):
 		return
-		
+
 	if is_instance_valid(grabbed_object):
 		return # Already holding something
-		
+	
 	# Find nearest grabbable object in aim direction
 	var best_target: Node2D = null
 	var best_score: float = -1.0 # Higher is better
