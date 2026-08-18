@@ -34,7 +34,7 @@ func _physics_process(delta: float) -> void:
 	if current_state == State.DEAD or current_state == State.IDLE:
 		return
 		
-	if PowerManager.has_method("is_time_frozen") and PowerManager.get("is_time_frozen"):
+	if PowerManager.is_time_frozen:
 		return
 		
 	if is_dashing:

@@ -13,7 +13,7 @@ func _ready() -> void:
 	rotation = randf() * PI * 2.0
 
 func _physics_process(delta: float) -> void:
-	if PowerManager.has_method("is_time_frozen") and PowerManager.get("is_time_frozen"):
+	if PowerManager.is_time_frozen:
 		return
 		
 	lifetime_timer += delta

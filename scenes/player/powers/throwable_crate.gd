@@ -23,7 +23,7 @@ func _ready() -> void:
 	hitbox.monitorable = false
 
 func _physics_process(delta: float) -> void:
-	if PowerManager.has_method("is_time_frozen") and PowerManager.get("is_time_frozen"):
+	if PowerManager.is_time_frozen:
 		return
 		
 	match current_state:

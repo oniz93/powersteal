@@ -320,7 +320,7 @@ func _position_melee_hitbox() -> void:
 
 func _check_melee_hits() -> void:
 	var current_dmg = MELEE_DAMAGE
-	if PowerManager.get("is_time_frozen"):
+	if PowerManager.is_time_frozen:
 		current_dmg += 1 # 1.5x rounded up essentially (1 -> 2)
 		
 	for body in melee_area.get_overlapping_bodies():

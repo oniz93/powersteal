@@ -28,7 +28,7 @@ func setup(dir: Vector2, is_enemy: bool = false) -> void:
 		collision_mask = 2 | 4
 
 func _physics_process(delta: float) -> void:
-	if PowerManager.has_method("is_time_frozen") and PowerManager.get("is_time_frozen"):
+	if PowerManager.is_time_frozen:
 		return # Time freeze mechanic placeholder
 		
 	if is_homing and is_instance_valid(target_node):
