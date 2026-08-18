@@ -36,12 +36,15 @@ func _ready() -> void:
 		_transition_to_phase(1)
 
 func take_damage(amount: int, _from_direction: Vector2 = Vector2.ZERO, _damage_type: String = "physical") -> void:
-	if current_state == State.DEAD:
+	if current_state == State.DEAD or current_state == State.IDLE:
+		# IDLE is the brief pre-fight window before Phase 1 starts. Ignore
+		# damage here so an early hit cannot advance phases and then be
+		# overwritten by the delayed _transition_to_phase(1) in _ready().
 		return
-		
+
 	current_health -= amount
 	health_changed.emit(current_health, max_health)
-	
+
 	_on_damage_taken()
 	_check_phase_transition()
 	
